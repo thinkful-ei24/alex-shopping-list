@@ -23,19 +23,18 @@ let filterSearch = '';
 // single shopping list item.
 function generateItemElement(item, itemIndex, template) {
   return `
-    <li class="js-item-index-element" data-item-index="${itemIndex}">
-      <input type="text" class="shopping-item js-shopping-item ${
-  item.checked ? 'shopping-item__checked' : ''
-}" value = "${item.name}">
-      <div class="shopping-item-controls">
-        <button class="shopping-item-toggle js-item-toggle">
-            <span class="button-label">check</span>
-        </button>
-        <button class="shopping-item-delete js-item-delete">
-            <span class="button-label">delete</span>
-        </button>
-      </div>
-    </li>`;
+  <li class="js-item-index-element" data-item-index="${itemIndex}">
+  <input type="text" class="shopping-item js-shopping-item 
+  ${item.checked ? 'shopping-item__checked' : ''}" value="${item.name}">
+  <div class="shopping-item-controls">
+    <button class="shopping-item-toggle js-item-toggle">
+      <span class="button-label">check</span>
+    </button>
+    <button class="shopping-item-delete js-item-delete">
+      <span class="button-label">delete</span>
+    </button>
+  </div>
+</li>`;
 }
 
 // given the state of the shopping list, generate a single
@@ -159,6 +158,17 @@ function handleDeleteItemClicked() {
   });
 }
 
+function handleEditItemTitle() {
+  $('.js-shopping-list').keyup(event => {
+    console.log('handleEditItemTitle ran');
+    const itemIndex = getItemIndexFromElement(event.currentTarget);
+    //console.log(event.currentTarget);
+
+    STORE[itemIndex].name = event.currentTarget;
+    //console.log(STORE[itemIndex]);
+  });
+}
+
 // this function will be our callback when the page loads. it's responsible for
 // initially rendering the shopping list, and activating our individual functions
 // that handle new item submission and user clicks on the "check" and "delete" buttons
@@ -170,6 +180,7 @@ function handleShoppingList() {
   handleDeleteItemClicked();
   handleDisplayChecked();
   handleFilterSearch();
+  handleEditItemTitle();
 }
 
 // when the page loads, call `handleShoppingList`

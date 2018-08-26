@@ -159,13 +159,16 @@ function handleDeleteItemClicked() {
 }
 
 function handleEditItemTitle() {
-  $('.js-shopping-list').keyup(event => {
+  $('.js-shopping-item').keyup(event => {
     console.log('handleEditItemTitle ran');
+    event.preventDefault();
     const itemIndex = getItemIndexFromElement(event.currentTarget);
-    //console.log(event.currentTarget);
+    console.log(event.currentTarget.value);
 
-    STORE[itemIndex].name = event.currentTarget;
-    //console.log(STORE[itemIndex]);
+    STORE[itemIndex].name = event.currentTarget.value;
+    console.log(STORE[itemIndex]);
+    renderShoppingList();
+    handleEditItemTitle();
   });
 }
 
